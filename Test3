@@ -1,1 +1,74 @@
-T
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert Time to Military Time</title>
+    <!-- Tautan ke Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        .container {
+            display: inline-block;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mb-4">Konversi Waktu ke Format Militer</h1>
+    <div class="form-group">
+        <label for="inputTime">Masukkan Waktu (format 12 jam AM/PM):</label>
+        <input type="text" class="form-control" id="inputTime" placeholder="Contoh: 07:05:45 PM">
+    </div>
+    <button class="btn btn-primary" onclick="convertToMilitaryTime()">Konversi</button>
+    <br>
+    <div class="mt-4">
+        <h3>Hasil:</h3>
+        <p><strong>Waktu Militer:</strong> <span id="militaryTime"></span></p>
+    </div>
+</div>
+
+<!-- Tautan ke Bootstrap JS dan jQuery (diperlukan oleh Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+function convertToMilitaryTime() {
+    var inputTime = document.getElementById("inputTime").value;
+    var militaryTime = "";
+
+    try {
+        var timeParts = inputTime.split(" ");
+        var time = timeParts[0];
+        var period = timeParts[1];
+
+        var timeComponents = time.split(":");
+        var hours = parseInt(timeComponents[0]);
+        var minutes = timeComponents[1];
+        var seconds = timeComponents[2];
+
+        if (period === "PM" && hours !== 12) {
+            hours += 12;
+        } else if (period === "AM" && hours === 12) {
+            hours = 0;
+        }
+
+        militaryTime = hours.toString().padStart(2, "0") + ":" + minutes + ":" + seconds;
+    } catch (error) {
+        alert("Masukkan waktu dengan format yang benar (contoh: 07:05:45 PM).");
+        return;
+    }
+
+    document.getElementById("militaryTime").textContent = militaryTime;
+}
+</script>
+
+</body>
+</html>
+
