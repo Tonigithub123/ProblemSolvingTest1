@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minimum dan Maximum Sum</title>
+    <!-- Tambahkan tautan ke Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Hitung Minimum dan Maksimum Sum</h1>
+    <div class="form-group">
+        <label for="inputNumbers">Masukkan Lima Angka Positif (pisahkan dengan spasi):</label>
+        <input type="text" class="form-control" id="inputNumbers">
+    </div>
+    <button class="btn btn-primary" onclick="calculateMinMaxSum()">Hitung</button>
+    
+    <div class="mt-4">
+        <p><strong>Hasil:</strong></p>
+        <p><strong>Minimum Sum:</strong> <span id="minSum"></span></p>
+        <p><strong>Maksimum Sum:</strong> <span id="maxSum"></span></p>
+    </div>
+</div>
+
+<!-- Tambahkan tautan ke Bootstrap JS dan jQuery (diperlukan oleh Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+function calculateMinMaxSum() {
+    var input = document.getElementById("inputNumbers").value;
+    var numbers = input.split(" ").map(Number);
+    
+    if (numbers.length === 5) {
+        // Mengurutkan array secara ascending
+        numbers.sort((a, b) => a - b);
+        
+        // Menghitung nilai minimum sum
+        var minSum = 0;
+        for (var i = 0; i < 4; i++) {
+            minSum += numbers[i];
+        }
+        
+        // Menghitung nilai maksimum sum
+        var maxSum = 0;
+        for (var j = 1; j < 5; j++) {
+            maxSum += numbers[j];
+        }
+        
+        // Menampilkan hasil minimum dan maksimum sum
+        document.getElementById("minSum").textContent = minSum;
+        document.getElementById("maxSum").textContent = maxSum;
+    } else {
+        alert("Masukkan lima angka positif.");
+    }
+}
+</script>
+
+</body>
+</html>
