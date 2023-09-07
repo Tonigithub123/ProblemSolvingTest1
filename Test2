@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rasio Elemen Array</title>
+    <!-- Tautan ke Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mb-4">Rasio Elemen Array</h1>
+    <div class="form-group">
+        <label for="inputSize">Masukkan Jumlah Elemen Array:</label>
+        <input type="number" class="form-control" id="inputSize">
+    </div>
+    <button class="btn btn-primary" onclick="inputArraySize()">Selanjutnya</button>
+</div>
+
+<div class="container" id="inputContainer" style="display: none;">
+    <h2 class="mt-4">Masukkan Elemen Array:</h2>
+    <div class="form-group">
+        <label for="inputArray">Elemen Array (pisahkan dengan koma dan spasi):</label>
+        <textarea class="form-control" id="inputArray" rows="4" cols="50" placeholder="Misal: -4, 3, -9, 0, 4, 1"></textarea>
+    </div>
+    <button class="btn btn-primary" onclick="calculateRatios()">Hitung</button>
+    <br>
+    <div class="mt-4">
+        <h3>Hasil:</h3>
+        <p><strong>Proportion of positive values:</strong> <span id="positiveRatio"></span></p>
+        <p><strong>Proportion of negative values:</strong> <span id="negativeRatio"></span></p>
+        <p><strong>Proportion of zeros:</strong> <span id="zeroRatio"></span></p>
+    </div>
+</div>
+
+<!-- Tautan ke Bootstrap JS dan jQuery (diperlukan oleh Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+var n = 0;
+
+function inputArraySize() {
+    n = parseInt(document.getElementById("inputSize").value);
+    if (n > 0) {
+        document.getElementById("inputContainer").style.display = "block";
+    } else {
+        alert("Masukkan jumlah elemen array yang valid.");
+    }
+}
+
+function calculateRatios() {
+    var inputArray = document.getElementById("inputArray").value;
+    var arr = inputArray.split(",").map(Number);
+    
+    if (arr.length !== n) {
+        alert("Jumlah elemen array tidak sesuai dengan yang diminta.");
+        return;
+    }
+    
+    var positiveCount = 0;
+    var negativeCount = 0;
+    var zeroCount = 0;
+    
+    for (var i = 0; i < n; i++) {
+        if (arr[i] > 0) {
+            positiveCount++;
+        } else if (arr[i] < 0) {
+            negativeCount++;
+        } else {
+            zeroCount++;
+        }
+    }
+    
+    var positiveRatio = (positiveCount / n).toFixed(6);
+    var negativeRatio = (negativeCount / n).toFixed(6);
+    var zeroRatio = (zeroCount / n).toFixed(6);
+    
+    document.getElementById("positiveRatio").textContent = positiveRatio;
+    document.getElementById("negativeRatio").textContent = negativeRatio;
+    document.getElementById("zeroRatio").textContent = zeroRatio;
+}
+</script>
+
+</body>
+</html>
