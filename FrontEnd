@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple ToDo App</title>
+    <!-- Tautan ke Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #todo-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <div id="todo-container">
+        <h1 class="mb-4">ToDo List</h1>
+        <div class="input-group mb-3">
+            <input type="text" id="new-task" class="form-control" placeholder="Add a new task">
+            <div class="input-group-append">
+                <button onclick="addTask()" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+        <input type="text" id="search-task" class="form-control mb-3" placeholder="Search tasks" onkeyup="searchTasks()">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="todo-list"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let tasks = [];
+
+        function addTask() {
+            const newTaskText = document.getElementById("new-task").value.trim();
+            if (newTaskText !== "") {
+                const newTask = {
+                    text: newTaskText,
+                    completed: false,
+                };
+                tasks.push(newTask);
+                document.getElementById("new-task").value = "";
+                displayTasks();
+            }
+        }
+
+        function toggleTaskStatus(index) {
+            tasks[index].completed = !tasks[index].completed;
+            displayTasks();
+        }
+
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            displayTasks();
+        }
+
+        function searchTasks() {
+            const searchQuery = document.getElementById("search-task").value.toLowerCase();
+            const filteredTasks = tasks.filter(task => task.text.toLowerCase().includes(searchQuery));
+            displayTasks(filteredTasks);
+        }
+
+        function displayTasks(displayedTasks) {
+            const todoList = document.getElementById("todo-list");
+            todoList.innerHTML = "";
+
+            const tasksToDisplay = displayedTasks || tasks;
+
+            for (let i = 0; i < tasksToDisplay.length; i++) {
+                const task = tasksToDisplay[i];
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${task.text}</td>
+                    <td>${task.completed ? '<span class="text-success">Completed</span>' : '<span class="text-warning">Pending</span>'}</td>
+                    <td>
+                        <button onclick="toggleTaskStatus(${i})" class="btn btn-success btn-sm mr-2">${task.completed ? 'Undo' : 'Done'}</button>
+                        <button onclick="deleteTask(${i})" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                `;
+
+                if (task.completed) {
+                    row.className = "table-success";
+                } else {
+                    row.className = "table-warning";
+                }
+
+                todoList.appendChild(row);
+            }
+        }
+
+        // Initial display of tasks
+        displayTasks();
+    </script>
+</body>
+</html>
